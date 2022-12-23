@@ -42,13 +42,13 @@ RUN apt update -y && apt install -y  --no-install-recommends \
 
 
 # Download and install go 1.18
-RUN wget https://golang.org/dl/go1.18.2.linux-amd64.tar.gz
+RUN wget https://golang.google.cn/dl/go1.18.2.linux-amd64.tar.gz
 RUN tar -xvf go1.18.2.linux-amd64.tar.gz
 RUN rm go1.18.2.linux-amd64.tar.gz
 RUN mv go /usr/local
 
 # Download geckodriver
-RUN wget https://github.com/mozilla/geckodriver/releases/download/v0.26.0/geckodriver-v0.26.0-linux64.tar.gz
+RUN wget https://ghproxy.com/https://github.com/mozilla/geckodriver/releases/download/v0.26.0/geckodriver-v0.26.0-linux64.tar.gz
 RUN tar -xvf geckodriver-v0.26.0-linux64.tar.gz
 RUN rm geckodriver-v0.26.0-linux64.tar.gz
 RUN mv geckodriver /usr/bin
@@ -69,6 +69,9 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 # Download Go packages
+ENV GO111MODULE=on
+ENV GOPROXY=https://goproxy.cn,direct
+
 RUN go install -v github.com/hakluke/hakrawler@latest
 
 RUN GO111MODULE=on go install -v -v github.com/bp0lr/gauplus@latest
